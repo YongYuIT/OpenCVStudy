@@ -36,3 +36,42 @@ JNIEXPORT jintArray JNICALL Java_com_thinking_imageinput_NdkTools_test_1image_1d
 	cvtColor(m_result, m_image_datas, CV_GRAY2BGRA);
 	return image_datas;
 }
+
+JNIEXPORT void JNICALL Java_com_thinking_imageinput_NdkTools_image_1change_1color
+(JNIEnv * env, jclass j_class, jobject image_data_obj, jint index, jint alpha){
+	jint width;
+	jint height;
+	jintArray image_datas;
+	//----------------------------------------------------------------------------------------------------------------------
+	__android_log_print(ANDROID_LOG_INFO, "yuyong", "start jni call");
+	jclass ImageData_class = env->GetObjectClass(image_data_obj);
+	jfieldID width_id = env->GetFieldID(ImageData_class, "width", "I");
+	width = env->GetIntField(image_data_obj, width_id);
+	__android_log_print(ANDROID_LOG_INFO, "yuyong", "get width is %i", width);
+	jfieldID height_id = env->GetFieldID(ImageData_class, "height", "I");
+	height = env->GetIntField(image_data_obj, height_id);
+	__android_log_print(ANDROID_LOG_INFO, "yuyong", "get height is %i", height);
+	jfieldID image_datas_id = env->GetFieldID(ImageData_class, "image_datas", "[I");
+	image_datas = (jintArray)env->GetObjectField(image_data_obj, image_datas_id);
+	__android_log_print(ANDROID_LOG_INFO, "yuyong", "get image_datas lenth is %i", env->GetArrayLength(image_datas));
+	//----------------------------------------------------------------------------------------------------------------------
+	jint* _image_datas = env->GetIntArrayElements(image_datas, 0);
+	unsigned char* p_image_datas = (unsigned char*)_image_datas;
+	IplImage img = Mat(height, width, CV_8UC4, p_image_datas);
+	int step = img.widthStep / sizeof(unsigned char);
+	int channels = img.nChannels;
+	unsigned char* point;
+
+	int value;
+	for (int i = 0; i < img.height; i++)
+	for (int j = 0; j < img.width; j++){
+		point = p_image_datas + i*step + j*channels;
+		__android_log_print(ANDROID_LOG_INFO, "yuyong", "point(%i,%i) %i %i %i %i", i, j, point[0], point[1], point[2], point[3]);
+		value = point[index];
+		point[0] = 0;
+		point[1] = 0;
+		point[2] = 0;
+		point[3] = alpha;
+		point[index] = value;
+	}
+}

@@ -15,6 +15,14 @@ extern "C" {
 	JNIEXPORT jintArray JNICALL Java_com_thinking_imageinput_NdkTools_test_1image_1data_1input
 		(JNIEnv *, jclass, jobject);
 
+	/*
+	 * Class:     com_thinking_imageinput_NdkTools
+	 * Method:    image_change_color
+	 * Signature: (Lcom/thinking/imageinput/NdkTools/ImageData;I)V
+	 */
+	JNIEXPORT void JNICALL Java_com_thinking_imageinput_NdkTools_image_1change_1color
+		(JNIEnv *, jclass, jobject, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

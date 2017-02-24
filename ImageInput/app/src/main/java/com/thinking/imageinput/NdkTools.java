@@ -32,9 +32,12 @@ public class NdkTools {
 
     //简单的灰度转换
     public static native int[] test_image_data_input(ImageData data);
+
+    //保留指定颜色成分
+    public static native void image_change_color(ImageData data, int index, int alpha);
 }
 
-//javah -d G:\OpenCVStu\20170223001\ImageInput\app\jni -classpath G:\OpenCVStu\20170223001\ImageInput\app\build\intermediates\classes\debug com.thinking.imageinput.NdkTools
+//javah -d G:\OpenCVStu\20170224001\OpenCVStudy\ImageInput\app\jni -classpath G:\OpenCVStu\20170224001\OpenCVStudy\ImageInput\app\build\intermediates\classes\debug com.thinking.imageinput.NdkTools
 
 //javap -classpath . -s NdkTools.ImageData
 /*

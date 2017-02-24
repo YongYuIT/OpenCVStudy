@@ -5,5 +5,6 @@
 using namespace std;
 using namespace cv;
 bool do_save_img(string save_path_name, Mat mat);
+bool do_save_img(string save_path_name, IplImage img);
 
 #endif
