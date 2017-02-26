@@ -38,7 +38,7 @@ JNIEXPORT jintArray JNICALL Java_com_thinking_imageinput_NdkTools_test_1image_1d
 }
 
 JNIEXPORT void JNICALL Java_com_thinking_imageinput_NdkTools_image_1change_1color
-(JNIEnv * env, jclass j_class, jobject image_data_obj, jint index, jint alpha){
+(JNIEnv * env, jclass j_class, jobject image_data_obj, jint index, jint alpha) {
 	jint width;
 	jint height;
 	jintArray image_datas;
@@ -58,20 +58,22 @@ JNIEXPORT void JNICALL Java_com_thinking_imageinput_NdkTools_image_1change_1colo
 	jint* _image_datas = env->GetIntArrayElements(image_datas, 0);
 	unsigned char* p_image_datas = (unsigned char*)_image_datas;
 	IplImage img = Mat(height, width, CV_8UC4, p_image_datas);
-	int step = img.widthStep / sizeof(unsigned char);
 	int channels = img.nChannels;
+	int step = img.widthStep / sizeof(unsigned char);
+	//这个日志输出表明step = width*channels
+	__android_log_print(ANDROID_LOG_INFO, "yuyong", "get step is %i , %i", step, width*channels);
 	unsigned char* point;
 
 	int value;
 	for (int i = 0; i < img.height; i++)
-	for (int j = 0; j < img.width; j++){
-		point = p_image_datas + i*step + j*channels;
-		__android_log_print(ANDROID_LOG_INFO, "yuyong", "point(%i,%i) %i %i %i %i", i, j, point[0], point[1], point[2], point[3]);
-		value = point[index];
-		point[0] = 0;
-		point[1] = 0;
-		point[2] = 0;
-		point[3] = alpha;
-		point[index] = value;
-	}
+		for (int j = 0; j < img.width; j++) {
+			point = p_image_datas + i*step + j*channels;
+			//__android_log_print(ANDROID_LOG_INFO, "yuyong", "point(%i,%i) %i %i %i %i", i, j, point[0], point[1], point[2], point[3]);
+			value = point[index];
+			point[0] = 0;
+			point[1] = 0;
+			point[2] = 0;
+			point[3] = alpha;
+			point[index] = value;
+		}
 }
