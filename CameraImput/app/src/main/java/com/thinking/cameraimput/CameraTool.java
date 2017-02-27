@@ -1,6 +1,7 @@
 package com.thinking.cameraimput;
 
 import android.hardware.Camera;
+import android.util.Log;
 
 import java.util.List;
 
@@ -17,11 +18,7 @@ public class CameraTool {
     private static CameraTool thiz;
     private CameraView mView;
     private Camera mCamera;
-    private Camera.Size mCameraSize;
 
-    public Camera.Size getSize() {
-        return mCameraSize;
-    }
 
     synchronized static CameraTool getThiz() {
         if (thiz != null)
@@ -43,7 +40,9 @@ public class CameraTool {
         mCamera.setPreviewCallback(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
-                mView.onGetFrame(data);
+                //Log.i("yuyong", "onPreviewFrame-->" + camera.getParameters().getPreviewSize().height + "-->" + camera.getParameters().getPreviewSize().width + "-->" + data.length);
+                if (mView != null)
+                    mView.onGetFrame(data, camera.getParameters().getPreviewSize());
             }
         });
     }
@@ -53,15 +52,15 @@ public class CameraTool {
         List<Camera.Size> supportSize = params.getSupportedPreviewSizes();
 
         //筛选出相机支持的，同时可被视图容纳的最大尺寸
-        mCameraSize = mCamera.new Size(0, 0);
+        Camera.Size max_size = mCamera.new Size(0, 0);
         for (Camera.Size s : supportSize) {
             if (s.height <= _height && s.width <= _width) {
-                if (getSizeValue(s) > getSizeValue(mCameraSize))
-                    mCameraSize = s;
+                if (getSizeValue(s) > getSizeValue(max_size))
+                    max_size = s;
             }
         }
 
-        params.setPreviewSize(mCameraSize.width, mCameraSize.height);
+        params.setPreviewSize(max_size.width, max_size.height);
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
         mCamera.setParameters(params);
     }
@@ -81,5 +80,6 @@ public class CameraTool {
         mCamera.stopPreview();
         mCamera.release();
         mCamera = null;
+        mView = null;
     }
 }

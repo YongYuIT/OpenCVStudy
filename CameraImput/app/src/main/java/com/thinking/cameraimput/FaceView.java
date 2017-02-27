@@ -2,6 +2,8 @@ package com.thinking.cameraimput;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.hardware.Camera;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -12,11 +14,11 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
 
     private CameraTool mTools;
     private FrameHandler mFHandler;
-
-    private byte[] mCameraFrame = null;
     private int[] mOutFrame;
     private int mWidth;
     private int mHeight;
+    private Camera.Size mCurrentCameraSize;
+    private Handler mHandler;
 
     public FaceView(Context mContext) {
         super(mContext);
@@ -29,6 +31,7 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
     }
 
     private void init() {
+        mHandler = new Handler();
         mTools = CameraTool.getThiz();
         mTools.setView(this);
         mTools.initCamera();
@@ -37,13 +40,15 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         //将相对数值（例如dp）转化为绝对像素
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
         mTools.setCamera(mWidth, mHeight);
         mTools.startFrame();
-        mFHandler.setDataSource(mCameraFrame, mTools.getSize().width, mTools.getSize().height, 1);
         mFHandler.setListener(this);
+        //Log.i("yuyong", "onMeasure --> " + mWidth + " , " + mHeight);
+        mFHandler.start();
     }
 
     @Override
@@ -51,23 +56,37 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
         super.onDraw(canvas);
         if (mOutFrame == null)
             return;
-        int x = (mWidth - mTools.getSize().width) / 2;
-        int y = (mHeight - mTools.getSize().height) / 2;
-        canvas.drawBitmap(mOutFrame, 0, mTools.getSize().width, x, y, mTools.getSize().width, mTools.getSize().height, true, null);
+        int x = (mWidth - mCurrentCameraSize.width) / 2;
+        int y = (mHeight - mCurrentCameraSize.height) / 2;
+        canvas.drawBitmap(mOutFrame, 0, mCurrentCameraSize.width, x, y, mCurrentCameraSize.width, mCurrentCameraSize.height, true, null);
     }
 
     @Override
-    public void onGetFrame(byte[] data) {
-        if (mCameraFrame == null)
-            mCameraFrame = new byte[data.length];
-        System.arraycopy(data, 0, mCameraFrame, 0, data.length);
+    protected void onDetachedFromWindow() {
+        //Log.i("yuyong", "onDetachedFromWindow");
+        super.onDetachedFromWindow();
+        mFHandler.stopHandle();
+        mTools.releaseCamera();
+    }
+
+    @Override
+    public void onGetFrame(byte[] data, Camera.Size size) {
+        mCurrentCameraSize = size;
+        mFHandler.setDataSource(data, mCurrentCameraSize.width, mCurrentCameraSize.height, 2);
         data = null;
     }
 
     @Override
     public void onFrame(int[] data) {
+        //Log.i("yuyong", "onFrame --> " + data[data.length / 2]);
         mOutFrame = data;
         //刷新界面
-        this.invalidate();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                FaceView.this.invalidate();
+            }
+        });
+
     }
 }
