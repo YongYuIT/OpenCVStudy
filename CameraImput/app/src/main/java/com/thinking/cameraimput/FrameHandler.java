@@ -12,11 +12,11 @@ public class FrameHandler extends Thread {
     private byte[] mDataSource;
     private int mWidth;
     private int mHeight;
-    private int mOretation;
     private int[] mDataOutPut;
     private FrameListener mListener;
     private static FrameHandler thiz;
     private boolean isKeep = false;
+    private Boolean isOutPut = false;
 
     private FrameHandler() {
     }
@@ -36,14 +36,13 @@ public class FrameHandler extends Thread {
     }
 
 
-    public void setDataSource(byte[] source, int width, int height, int oretation) {
+    public void setDataSource(byte[] source, int width, int height) {
         if (mDataSource == null)
             mDataSource = new byte[source.length];
         System.arraycopy(source, 0, mDataSource, 0, source.length);
         mWidth = width;
         mHeight = height;
         mDataOutPut = new int[mWidth * mHeight];
-        mOretation = oretation;
     }
 
     public void setListener(FrameListener _l) {
@@ -52,7 +51,7 @@ public class FrameHandler extends Thread {
 
     @Override
     public synchronized void start() {
-        if (!isKeep) {
+        if (!isKeep && !this.isAlive()) {
             isKeep = true;
             super.start();
         }
@@ -62,6 +61,11 @@ public class FrameHandler extends Thread {
         isKeep = false;
     }
 
+    public void doOutPut() {
+        synchronized (isOutPut) {
+            isOutPut.notifyAll();
+        }
+    }
 
     @Override
     public void run() {
@@ -70,20 +74,22 @@ public class FrameHandler extends Thread {
             if (mDataSource == null || mDataOutPut == null)
                 continue;
             //Log.i("yuyong", mDataSource.length + "-->" + mDataOutPut.length + "-->" + mWidth + "-->" + mHeight);
-            handle_frame(mWidth, mHeight, mOretation, mDataSource, mDataOutPut);
+            handle_frame(mWidth, mHeight, false, mDataSource, mDataOutPut);
             //Log.i("yuyong", "run mDataOutPut");
             mListener.onFrame(mDataOutPut);
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
+            synchronized (isOutPut) {
+                try {
+                    isOutPut.wait();
+                } catch (Exception e) {
 
+                }
+            }
         }
         mDataOutPut = null;
     }
 
     //oretation 1：竖屏；2：横屏
-    private static native void handle_frame(int width, int heigt, int oretation, byte[] input_frame_data, int[] out_frame_data);
+    private static native void handle_frame(int width, int heigt, boolean is_roate, byte[] input_frame_data, int[] out_frame_data);
 }
 
 //javah -d G:\OpenCVStu\20170227002\OpenCVStudy\CameraImput\app\jni -classpath G:\OpenCVStu\20170227002\OpenCVStudy\CameraImput\app\build\intermediates\classes\debug com.thinking.cameraimput.FrameHandler

@@ -59,6 +59,7 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
         int x = (mWidth - mCurrentCameraSize.width) / 2;
         int y = (mHeight - mCurrentCameraSize.height) / 2;
         canvas.drawBitmap(mOutFrame, 0, mCurrentCameraSize.width, x, y, mCurrentCameraSize.width, mCurrentCameraSize.height, true, null);
+        mFHandler.doOutPut();
     }
 
     @Override
@@ -72,7 +73,7 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
     @Override
     public void onGetFrame(byte[] data, Camera.Size size) {
         mCurrentCameraSize = size;
-        mFHandler.setDataSource(data, mCurrentCameraSize.width, mCurrentCameraSize.height, 2);
+        mFHandler.setDataSource(data, mCurrentCameraSize.width, mCurrentCameraSize.height);
         data = null;
     }
 

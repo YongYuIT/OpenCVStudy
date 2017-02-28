@@ -19,7 +19,7 @@ extern "C" {
 	 * Signature: (III[B[I)V
 	 */
 	JNIEXPORT void JNICALL Java_com_thinking_cameraimput_FrameHandler_handle_1frame
-		(JNIEnv *, jclass, jint, jint, jint, jbyteArray, jintArray);
+		(JNIEnv *, jclass, jint, jint, jboolean, jbyteArray, jintArray);
 
 #ifdef __cplusplus
 }

@@ -50,7 +50,6 @@ public class CameraTool {
     public synchronized void setCamera(int _width, int _height) {
         Camera.Parameters params = mCamera.getParameters();
         List<Camera.Size> supportSize = params.getSupportedPreviewSizes();
-
         //筛选出相机支持的，同时可被视图容纳的最大尺寸
         Camera.Size max_size = mCamera.new Size(0, 0);
         for (Camera.Size s : supportSize) {
@@ -59,7 +58,6 @@ public class CameraTool {
                     max_size = s;
             }
         }
-
         params.setPreviewSize(max_size.width, max_size.height);
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
         mCamera.setParameters(params);

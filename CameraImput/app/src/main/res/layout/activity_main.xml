@@ -12,6 +12,7 @@
 
     <com.thinking.cameraimput.FaceView
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent"
+        android:rotation="270" />
 
 </LinearLayout>
