@@ -18,6 +18,7 @@ public class CameraTool {
     private static CameraTool thiz;
     private CameraView mView;
     private Camera mCamera;
+    private boolean isRotate = true;
 
 
     synchronized static CameraTool getThiz() {
@@ -48,16 +49,25 @@ public class CameraTool {
     }
 
     public synchronized void setCamera(int _width, int _height) {
+
+        if (isRotate) {
+            _width = _width + _height;
+            _height = _width - _height;
+            _width = _width - _height;
+        }
+
         Camera.Parameters params = mCamera.getParameters();
         List<Camera.Size> supportSize = params.getSupportedPreviewSizes();
         //筛选出相机支持的，同时可被视图容纳的最大尺寸
         Camera.Size max_size = mCamera.new Size(0, 0);
         for (Camera.Size s : supportSize) {
+            Log.i("yuyong", s.width + "," + s.height);
             if (s.height <= _height && s.width <= _width) {
                 if (getSizeValue(s) > getSizeValue(max_size))
                     max_size = s;
             }
         }
+        Log.i("yuyong", "max_size-->" + max_size.width + "," + max_size.height);
         params.setPreviewSize(max_size.width, max_size.height);
         params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
         mCamera.setParameters(params);

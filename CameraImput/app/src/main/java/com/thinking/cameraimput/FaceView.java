@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -19,6 +20,7 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
     private int mHeight;
     private Camera.Size mCurrentCameraSize;
     private Handler mHandler;
+    private boolean isRotate = true;
 
     public FaceView(Context mContext) {
         super(mContext);
@@ -36,6 +38,9 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
         mTools.setView(this);
         mTools.initCamera();
         mFHandler = FrameHandler.getThiz();
+        if (!isRotate) {
+            setRotation(270);
+        }
     }
 
     @Override
@@ -47,19 +52,26 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
         mTools.setCamera(mWidth, mHeight);
         mTools.startFrame();
         mFHandler.setListener(this);
-        //Log.i("yuyong", "onMeasure --> " + mWidth + " , " + mHeight);
+        Log.i("yuyong", "onMeasure --> " + mWidth + " , " + mHeight);
         mFHandler.start();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mOutFrame == null)
             return;
-        int x = (mWidth - mCurrentCameraSize.width) / 2;
-        int y = (mHeight - mCurrentCameraSize.height) / 2;
-        canvas.drawBitmap(mOutFrame, 0, mCurrentCameraSize.width, x, y, mCurrentCameraSize.width, mCurrentCameraSize.height, true, null);
-        mFHandler.doOutPut();
+        int currentWidth = mCurrentCameraSize.width;
+        int currentHeight = mCurrentCameraSize.height;
+        if (isRotate) {
+            currentWidth = mCurrentCameraSize.height;
+            currentHeight = mCurrentCameraSize.width;
+        }
+        int x = (mWidth - currentWidth) / 2;
+        int y = (mHeight - currentHeight) / 2;
+        canvas.drawBitmap(mOutFrame, 0, currentWidth, x, y, currentWidth, currentHeight, true, null);
+        // mFHandler.doOutPut();
+        //Log.i("yuyong", "Current (" + mWidth + "," + mHeight + ") Camera (" + currentWidth + "," + currentHeight + ")");
     }
 
     @Override
@@ -86,6 +98,7 @@ public class FaceView extends View implements CameraView, FrameHandler.FrameList
             @Override
             public void run() {
                 FaceView.this.invalidate();
+                mFHandler.doOutPut();
             }
         });
 

@@ -1,6 +1,6 @@
 package com.thinking.cameraimput;
 
-import android.util.Log;
+import android.content.res.Resources;
 
 /**
  * Created by Yu Yong on 2017/2/27.
@@ -17,6 +17,7 @@ public class FrameHandler extends Thread {
     private static FrameHandler thiz;
     private boolean isKeep = false;
     private Boolean isOutPut = false;
+    private boolean isRotate = true;
 
     private FrameHandler() {
     }
@@ -42,7 +43,8 @@ public class FrameHandler extends Thread {
         System.arraycopy(source, 0, mDataSource, 0, source.length);
         mWidth = width;
         mHeight = height;
-        mDataOutPut = new int[mWidth * mHeight];
+        if (mDataOutPut == null)
+            mDataOutPut = new int[mWidth * mHeight];
     }
 
     public void setListener(FrameListener _l) {
@@ -74,21 +76,20 @@ public class FrameHandler extends Thread {
             if (mDataSource == null || mDataOutPut == null)
                 continue;
             //Log.i("yuyong", mDataSource.length + "-->" + mDataOutPut.length + "-->" + mWidth + "-->" + mHeight);
-            handle_frame(mWidth, mHeight, false, mDataSource, mDataOutPut);
+            handle_frame(mWidth, mHeight, isRotate, mDataSource, mDataOutPut);
             //Log.i("yuyong", "run mDataOutPut");
             mListener.onFrame(mDataOutPut);
             synchronized (isOutPut) {
                 try {
                     isOutPut.wait();
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
         }
         mDataOutPut = null;
     }
 
-    //oretation 1：竖屏；2：横屏
     private static native void handle_frame(int width, int heigt, boolean is_roate, byte[] input_frame_data, int[] out_frame_data);
 }
 
