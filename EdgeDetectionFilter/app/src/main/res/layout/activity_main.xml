@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="centerInside"
-            android:src="@drawable/test" />
+            android:src="@drawable/test_001" />
 
         <Button
             android:id="@+id/btn_test_1"

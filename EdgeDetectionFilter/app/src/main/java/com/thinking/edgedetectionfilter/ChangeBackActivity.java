@@ -18,7 +18,7 @@ public class ChangeBackActivity extends Activity implements ImageHandler.Listene
     public void onClick(View v) {
         if (v.getId() == R.id.btn_test_1) {
             Bitmap source = ((BitmapDrawable) getResources().getDrawable(
-                    R.drawable.test)).getBitmap();
+                    R.drawable.test_000)).getBitmap();
             ImageHandler.ImageData data = new ImageHandler.ImageData(source);
             ImageHandler.get_image_change_bk(data, this);
             Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
