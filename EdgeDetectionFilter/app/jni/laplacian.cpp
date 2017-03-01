@@ -1,10 +1,5 @@
 #include "com_thinking_edgedetectionfilter_ImageHandler.h"
-#include <android/log.h>
-#include"tools.h"
-#include <opencv2/objdetect/objdetect.hpp>
-#include <opencv2/contrib/contrib.hpp>
-using namespace cv;
-
+#include "tools.h"
 JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1image_1laplacian
 (JNIEnv * env, jclass j_class, jobject image_data_obj, jobject listener_obj){
 	jint width;
@@ -42,7 +37,14 @@ JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1i
 		env->CallVoidMethod(listener_obj, onHandling_id, out, width, height, 0);
 	}
 	//----------------------------------------------------------------------------------------------------------------------
-	//中值滤波，降噪，边缘锐化
+	//降噪
+	//噪声类型：盐噪声（随机白点）；胡椒噪声（随机黑点）；椒盐噪声（随机黑白点）；高斯噪声（概率密度函数服从正态分布）
+	//滤波器：高斯滤波
+	//        中值滤波，降噪，边缘锐化
+	//        均值滤波
+	//        双边滤波
+
+	//中值滤波
 	medianBlur(hui_img, hui_img, 7);
 
 	{

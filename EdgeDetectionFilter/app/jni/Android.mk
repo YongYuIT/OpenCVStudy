@@ -6,7 +6,8 @@ OPENCV_INSTALL_MODULES:=on
 include E:\OpenCV-2.4.11-android-sdk\OpenCV-android-sdk\sdk\native\jni\OpenCV.mk
 
 LOCAL_MODULE    := com_thinking_opencv
-LOCAL_SRC_FILES := com_thinking_edgedetectionfilter_ImageHandler.cpp \
+LOCAL_SRC_FILES := laplacian.cpp \
+	change_bk.cpp \
     tools.cpp \
 
 LOCAL_LDLIBS +=  -llog -ldl

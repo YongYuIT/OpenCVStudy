@@ -33,7 +33,11 @@ public class ImageHandler {
         void onHandling(int[] img, int width, int height, int index);
     }
 
+    //借助Laplacian边缘滤波器实现素描效果
     public static native void get_image_laplacian(ImageData data, Listener listener);
+
+    //借助阈值二值化实现抠图换背景
+    public static native void get_image_change_bk(ImageData data, Listener listener);
 }
 
 //javah -d G:\OpenCVStu\20170301001\OpenCVStudy\EdgeDetectionFilter\app\jni -classpath G:\OpenCVStu\20170301001\OpenCVStudy\EdgeDetectionFilter\app\build\intermediates\classes\debug com.thinking.edgedetectionfilter.ImageHandler

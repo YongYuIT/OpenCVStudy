@@ -70,7 +70,8 @@
     <ClInclude Include="..\..\..\tools.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\com_thinking_edgedetectionfilter_ImageHandler.cpp" />
+    <ClCompile Include="..\..\..\change_bk.cpp" />
+    <ClCompile Include="..\..\..\laplacian.cpp" />
     <ClCompile Include="..\..\..\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
