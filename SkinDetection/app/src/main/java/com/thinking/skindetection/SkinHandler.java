@@ -25,16 +25,16 @@ public class SkinHandler {
     }
 
     public static class Position {
-        int x;
-        int y;
-        int width;
-        int height;
+        public int x = 0;
+        public int y = 0;
+        public int width = 0;
+        public int height = 0;
     }
 
     public static class ImageData {
-        public int width;
-        public int height;
-        public int[] image_datas;
+        public int width = 0;
+        public int height = 0;
+        public int[] image_datas = null;
 
         public ImageData(int w, int h) {
             width = w;
