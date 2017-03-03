@@ -11,10 +11,24 @@ bool do_save_img(string save_path_name, Mat mat)
 	do_save_img(save_path_name, img);
 }
 
-void out_put_img(JNIEnv * env, jobject listener_obj, jmethodID onHandling_id, Mat out_put, int width, int height, int index){
+JNIEnv * env;
+jobject listener_obj;
+jmethodID onHandling_id;
+void set_out_params(JNIEnv * _env, jobject _listener_obj, jmethodID _onHandling_id){
+	env = _env;
+	listener_obj = _listener_obj;
+	onHandling_id = _onHandling_id;
+}
+
+void out_put_img(Mat out_put, int index){
 	Mat tmp;
-	cvtColor(out_put, tmp, CV_GRAY2BGRA);
+	if (out_put.channels() == 1)
+		cvtColor(out_put, tmp, CV_GRAY2BGRA);
+	else if (out_put.channels() == 3)
+		cvtColor(out_put, tmp, CV_BGR2BGRA);
+	else
+		out_put.copyTo(tmp);
 	jintArray out = env->NewIntArray(tmp.rows*tmp.cols);
 	env->ReleaseIntArrayElements(out, (jint*)tmp.data, 0);
-	env->CallVoidMethod(listener_obj, onHandling_id, out, width, height, index);
+	env->CallVoidMethod(listener_obj, onHandling_id, out, out_put.cols, out_put.rows, index);
 }

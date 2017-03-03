@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>G:\OpenCV-2.4.11-android-sdk\OpenCV-android-sdk\sdk\native\jni\include;E:\Program Files\Java\jdk1.7.0_79\include;E:\Program Files\Java\jdk1.7.0_79\include\win32;G:\android-ndk32-r10-windows-x86_64\android-ndk-r10\platforms\android-19\arch-arm\usr\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\OpenCV-2.4.11-android-sdk\OpenCV-android-sdk\sdk\native\jni\include;E:\Program Files\Java\jdk1.7.0_79\include;E:\Program Files\Java\jdk1.7.0_79\include\win32;E:\android-ndk-r10b\platforms\android-19\arch-arm\usr\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

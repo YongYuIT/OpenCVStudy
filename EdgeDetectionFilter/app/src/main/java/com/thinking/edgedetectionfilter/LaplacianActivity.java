@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends Activity implements ImageHandler.Listener {
+public class LaplacianActivity extends Activity implements ImageHandler.Listener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,16 @@ public class MainActivity extends Activity implements ImageHandler.Listener {
             case 2:
                 id = R.id.img_p_3;
                 break;
+            case 3:
+                id = R.id.img_p_4;
+                break;
+            case 4:
+                id = R.id.img_p_5;
+                break;
         }
-
         Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         result.setPixels(img, 0, width, 0, 0, width, height);
         ((ImageView) findViewById(id)).setImageBitmap(result);
+        findViewById(id).setVisibility(View.VISIBLE);
     }
 }

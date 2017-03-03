@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.thinking.edgedetectionfilter.MainActivity">
+    tools:context="com.thinking.edgedetectionfilter.LaplacianActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,19 +32,36 @@
             android:id="@+id/img_p_1"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_p_2"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_p_3"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_p_4"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_p_5"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_2"

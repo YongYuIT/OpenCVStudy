@@ -8,5 +8,7 @@ using namespace cv;
 
 bool do_save_img(string save_path_name, Mat mat);
 bool do_save_img(string save_path_name, IplImage img);
-void out_put_img(JNIEnv * env, jobject listener_obj, jmethodID onHandling_id, Mat out_put, int width, int height, int index);
+void set_out_params(JNIEnv * _env, jobject _listener_obj, jmethodID _onHandling_id);
+void out_put_img(Mat out_put, int index);
+
 #endif

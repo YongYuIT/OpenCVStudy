@@ -22,6 +22,7 @@ JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1i
 	//解析Listener
 	jclass Listener_class = env->GetObjectClass(listener_obj);
 	jmethodID onHandling_id = env->GetMethodID(Listener_class, "onHandling", "([IIII)V");
+	set_out_params(env, listener_obj, onHandling_id);
 	//----------------------------------------------------------------------------------------------------------------------
 	jint* _image_datas = env->GetIntArrayElements(image_datas, 0);
 	Mat m_image_datas(height, width, CV_8UC4, (unsigned char*)_image_datas);
@@ -31,33 +32,33 @@ JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1i
 	//降噪
 	medianBlur(hui_img, hui_img, 15);
 	//回调
-	out_put_img(env, listener_obj, onHandling_id, hui_img, width, height, 0);
+	out_put_img(hui_img, 0);
 	//----------------------------------------------------------------------------------------------------------------------
 	//二值化，找出头发等颜色较深区域
 	Mat result;
 	threshold(hui_img, result, 60, 255, THRESH_BINARY_INV);
 	//回调
-	out_put_img(env, listener_obj, onHandling_id, result, width, height, 1);
+	out_put_img(result, 1);
 	//----------------------------------------------------------------------------------------------------------------------
 	//二值化，找出人体等颜色较浅区域
 	Mat wake_result;
 	threshold(hui_img, wake_result, 170, 255, THRESH_TOZERO);
 	//回调
-	out_put_img(env, listener_obj, onHandling_id, wake_result, width, height, 2);
+	out_put_img(wake_result, 2);
 	//----------------------------------------------------------------------------------------------------------------------
 	//融合
 	unsigned char* point;
 	unsigned char* _point;
 	unsigned char* __point;
 	for (int i = 0; i < m_image_datas.rows; i++)
-		for (int j = 0; j < m_image_datas.cols; j++) {
-			point = m_image_datas.data + i*(m_image_datas.cols*m_image_datas.channels()) + j*m_image_datas.channels();
-			_point = result.data + i*(result.cols*result.channels()) + j*result.channels();
-			__point = wake_result.data + i*(wake_result.cols*wake_result.channels()) + j*wake_result.channels();
+	for (int j = 0; j < m_image_datas.cols; j++) {
+		point = m_image_datas.data + i*(m_image_datas.cols*m_image_datas.channels()) + j*m_image_datas.channels();
+		_point = result.data + i*(result.cols*result.channels()) + j*result.channels();
+		__point = wake_result.data + i*(wake_result.cols*wake_result.channels()) + j*wake_result.channels();
 
-			if (!((_point[0]) > 0 || (__point[0]) > 0)) {
-				point[3] = 10;
-			}
+		if (!((_point[0]) > 0 || (__point[0]) > 0)) {
+			point[3] = 10;
 		}
+	}
 	//----------------------------------------------------------------------------------------------------------------------
 }
