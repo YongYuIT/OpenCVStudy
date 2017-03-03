@@ -4,8 +4,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/contrib/contrib.hpp>
-using namespace cv;
-using namespace std;
 /* Header for class com_thinking_edgedetectionfilter_ImageHandler */
 
 #ifndef _Included_com_thinking_edgedetectionfilter_ImageHandler
@@ -19,6 +17,14 @@ extern "C" {
 	 * Signature: (Lcom/thinking/edgedetectionfilter/ImageHandler/ImageData;Lcom/thinking/edgedetectionfilter/ImageHandler/Listener;)V
 	 */
 	JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1image_1laplacian
+		(JNIEnv *, jclass, jobject, jobject);
+
+	/*
+	 * Class:     com_thinking_edgedetectionfilter_ImageHandler
+	 * Method:    get_image_scharr
+	 * Signature: (Lcom/thinking/edgedetectionfilter/ImageHandler/ImageData;Lcom/thinking/edgedetectionfilter/ImageHandler/Listener;)V
+	 */
+	JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1image_1scharr
 		(JNIEnv *, jclass, jobject, jobject);
 
 	/*

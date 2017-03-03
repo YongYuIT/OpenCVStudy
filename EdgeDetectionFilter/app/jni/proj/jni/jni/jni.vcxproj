@@ -72,6 +72,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\change_bk.cpp" />
     <ClCompile Include="..\..\..\laplacian.cpp" />
+    <ClCompile Include="..\..\..\scharr.cpp" />
     <ClCompile Include="..\..\..\tools.cpp" />
   </ItemGroup>
   <ItemGroup>

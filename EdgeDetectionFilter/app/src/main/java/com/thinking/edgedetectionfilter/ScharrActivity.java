@@ -7,25 +7,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class LaplacianActivity extends Activity implements ImageHandler.Listener {
+public class ScharrActivity extends Activity implements ImageHandler.Listener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laplacian);
+        setContentView(R.layout.activity_scharr);
     }
+
 
     public void onClick(View v) {
         if (v.getId() == R.id.btn_test_1) {
             Bitmap source = ((BitmapDrawable) getResources().getDrawable(
                     R.drawable.test_001)).getBitmap();
             ImageHandler.ImageData data = new ImageHandler.ImageData(source);
-            ImageHandler.get_image_laplacian(data, this);
+            ImageHandler.get_image_scharr(data, this);
             Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
             result.setPixels(data.image_datas, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight());
             ((ImageView) findViewById(R.id.img_2)).setImageBitmap(result);
         }
     }
+
 
     @Override
     public void onHandling(int[] img, int width, int height, int index) {

@@ -9,6 +9,7 @@ LOCAL_MODULE    := com_thinking_opencv
 LOCAL_SRC_FILES := laplacian.cpp \
 	change_bk.cpp \
     tools.cpp \
+    scharr.cpp \
 
 LOCAL_LDLIBS +=  -llog -ldl
 include $(BUILD_SHARED_LIBRARY)

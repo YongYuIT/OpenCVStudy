@@ -36,11 +36,14 @@ public class ImageHandler {
     //借助Laplacian边缘滤波器实现素描效果
     public static native void get_image_laplacian(ImageData data, Listener listener);
 
+    //借助Scharr梯度滤波器实现素描效果
+    public static native void get_image_scharr(ImageData data, Listener listener);
+
     //借助阈值二值化实现抠图换背景
     public static native void get_image_change_bk(ImageData data, Listener listener);
 }
 
-//javah -d G:\OpenCVStu\20170301001\OpenCVStudy\EdgeDetectionFilter\app\jni -classpath G:\OpenCVStu\20170301001\OpenCVStudy\EdgeDetectionFilter\app\build\intermediates\classes\debug com.thinking.edgedetectionfilter.ImageHandler
+//javah -d G:\OpenCVStu\20170303002\OpenCVStudy\EdgeDetectionFilter\app\jni -classpath G:\OpenCVStu\20170303002\OpenCVStudy\EdgeDetectionFilter\app\build\intermediates\classes\debug com.thinking.edgedetectionfilter.ImageHandler
 
 //javap -classpath . -s ImageHandler.Listener
 /*
@@ -48,4 +51,12 @@ public interface com.thinking.edgedetectionfilter.ImageHandler$Listener {
   public abstract void onHandling(int[], int, int, int);
     descriptor: ([IIII)V
 }
+*/
+
+/*
+#include <jni.h>
+#include <android/log.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/contrib/contrib.hpp>
 */
