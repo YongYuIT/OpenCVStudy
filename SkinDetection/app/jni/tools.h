@@ -16,6 +16,8 @@ static jmethodID onHandling_id;
 char* jstringTostring(JNIEnv* env, jstring jstr);
 void set_out_params(JNIEnv * _env, jobject _listener_obj, jmethodID _onHandling_id);
 void out_put_img(Mat out_put, int index);
+//formate={1:YCrCb}
+void out_put_img(Mat out_put, int formate, int index);
 
 Mat getLaplacianMask(Mat& source_img);
 

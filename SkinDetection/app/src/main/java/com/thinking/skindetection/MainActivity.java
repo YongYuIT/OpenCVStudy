@@ -17,12 +17,14 @@ public class MainActivity extends Activity implements SkinHandler.Listener {
         SkinHandler.init(this);
     }
 
+    SkinHandler.Position face_p;
+
     public void onClick(View v) {
         if (v.getId() == R.id.btn_test_1) {
             Bitmap source = ((BitmapDrawable) getResources().getDrawable(
                     R.drawable.test_000)).getBitmap();
             SkinHandler.ImageData data = new SkinHandler.ImageData(source);
-            SkinHandler.Position face_p = new SkinHandler.Position();
+            face_p = new SkinHandler.Position();
             SkinHandler.getFaseLocation(data, face_p, this);
             Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
             result.setPixels(data.image_datas, 0, source.getWidth(), 0, 0, source.getWidth(), source.getHeight());
@@ -33,7 +35,6 @@ public class MainActivity extends Activity implements SkinHandler.Listener {
             Bitmap source = ((BitmapDrawable) getResources().getDrawable(
                     R.drawable.test_000)).getBitmap();
             SkinHandler.ImageData data = new SkinHandler.ImageData(source);
-            SkinHandler.Position face_p = new SkinHandler.Position();
             SkinHandler.changeSkin(data, face_p, this);
 
             Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);

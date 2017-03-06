@@ -1,8 +1,9 @@
 #include "com_thinking_skindetection_SkinHandler.h"
 #include "tools.h"
+using namespace cv;
 
 JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_changeSkin
-(JNIEnv * env, jclass j_calss, jobject img_data_obj, jobject position_obj, jobject listener_obj){
+(JNIEnv * env, jclass j_calss, jobject img_data_obj, jobject position_obj, jobject listener_obj) {
 	jint width;
 	jint height;
 	jintArray image_datas;
@@ -45,13 +46,18 @@ JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_changeSkin
 	//用拉普拉斯边缘滤波器得到边缘掩码
 	//图片收缩
 	Mat s_img;
-	resize(m_image_datas, s_img, Size(300, 300));
+	const int s_width = 300;
+	const float scale_rate = m_image_datas.cols / (float)s_width;
+	resize(m_image_datas, s_img, Size(s_width, m_image_datas.rows / scale_rate));
+	p_x /= scale_rate;
+	p_y /= scale_rate;
+	p_width /= scale_rate;
+	p_height /= scale_rate;
+	//----------------------------------------------------------------------------------------------------------------------
 	//转码
-	{
-		Mat tmp;
-		cvtColor(s_img, tmp, CV_BGRA2BGR);
-		cvtColor(tmp, s_img, CV_BGR2YCrCb);
-	}
+	Mat s_r_img;
+	cvtColor(s_img, s_r_img, CV_BGRA2BGR);
+	cvtColor(s_r_img, s_img, CV_BGR2YCrCb);
 	//用拉普拉斯边缘滤波器得到全尺寸边缘掩码
 	Mat l_mask = getLaplacianMask(m_image_datas);
 	//得到带边界的缩放掩码
@@ -68,13 +74,21 @@ JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_changeSkin
 	out_put_img(s_b_mask, 2);
 	//----------------------------------------------------------------------------------------------------------------------
 	Point skin_p[6];
-	skin_p[0] = Point(p_width / 2               , p_height / 2 - p_height / 6);
+	skin_p[0] = Point(p_width / 2, p_height / 2 - p_height / 6);
 	skin_p[1] = Point(p_width / 2 - p_width / 11, p_height / 2 - p_height / 6);
 	skin_p[2] = Point(p_width / 2 + p_width / 11, p_height / 2 - p_height / 6);
-	skin_p[3] = Point(p_width / 2               , p_height / 2 + p_height / 16);
-	skin_p[4] = Point(p_width / 2 - p_width / 9 , p_height / 2 + p_height / 16);
-	skin_p[5] = Point(p_width / 2 + p_width / 9 , p_height / 2 + p_height / 16);
-	//----------------------------------------------------------------------------------------------------------------------
+	skin_p[3] = Point(p_width / 2, p_height / 2 + p_height / 16);
+	skin_p[4] = Point(p_width / 2 - p_width / 9, p_height / 2 + p_height / 16);
+	skin_p[5] = Point(p_width / 2 + p_width / 9, p_height / 2 + p_height / 16);
+
 	Scalar lowerDiff = Scalar(60, 25, 20);
 	Scalar upperDiff = Scalar(80, 15, 15);
+
+	Mat c_s_mask = s_mask.clone();
+	for (int i = 0; i < 6; i++) {
+		__android_log_print(ANDROID_LOG_INFO, "yuyong", "pi(%i,%i)", skin_p[i].x, skin_p[i].y);
+		floodFill(s_img, s_b_mask, skin_p[i], Scalar(), NULL, lowerDiff, upperDiff, 4 | FLOODFILL_FIXED_RANGE | FLOODFILL_MASK_ONLY);
+	}
+	s_mask -= c_s_mask;
+	out_put_img(s_b_mask, 3);
 }

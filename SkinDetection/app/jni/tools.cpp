@@ -18,13 +18,13 @@ char* jstringTostring(JNIEnv* env, jstring jstr)
 	return rtn;
 }
 
-void set_out_params(JNIEnv * _env, jobject _listener_obj, jmethodID _onHandling_id){
+void set_out_params(JNIEnv * _env, jobject _listener_obj, jmethodID _onHandling_id) {
 	env = _env;
 	listener_obj = _listener_obj;
 	onHandling_id = _onHandling_id;
 }
 
-void out_put_img(Mat out_put, int index){
+void out_put_img(Mat out_put, int index) {
 	Mat tmp;
 	if (out_put.channels() == 1)
 		cvtColor(out_put, tmp, CV_GRAY2BGRA);
@@ -35,6 +35,15 @@ void out_put_img(Mat out_put, int index){
 	jintArray out = env->NewIntArray(tmp.rows*tmp.cols);
 	env->ReleaseIntArrayElements(out, (jint*)tmp.data, 0);
 	env->CallVoidMethod(listener_obj, onHandling_id, out, out_put.cols, out_put.rows, index);
+}
+
+//formate={1:YCrCb}
+void out_put_img(Mat out_put, int formate, int index) {
+	if (formate == 1) {
+		Mat tmp;
+		cvtColor(out_put, tmp, CV_YCrCb2BGR);
+		out_put_img(tmp, index);
+	}
 }
 
 Mat getLaplacianMask(Mat& source_img)
