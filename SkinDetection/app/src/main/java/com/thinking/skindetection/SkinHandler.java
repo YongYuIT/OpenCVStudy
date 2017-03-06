@@ -50,38 +50,22 @@ public class SkinHandler {
         }
     }
 
+    public interface Listener {
+        void onHandling(int[] img, int width, int height, int index);
+    }
+
     public static native boolean init(String path);
 
-    public static native void getFaseLocation(ImageData data, Position position);
+    public static native void getFaseLocation(ImageData data, Position position, Listener listener);
 
-    public static native void getEyesLocation(ImageData data, Position position_left, Position position_right);
+    public static native void getEyesLocation(ImageData data, Position position_left, Position position_right, Listener listener);
+
+    public static native void changeSkin(ImageData data, Position position, Listener listener);
 }
 
-//javah -d G:\OpenCVStu\20170303002\OpenCVStudy\SkinDetection\app\jni -classpath G:\OpenCVStu\20170303002\OpenCVStudy\SkinDetection\app\build\intermediates\classes\debug com.thinking.skindetection.SkinHandler
+//javah -d G:\OpenCVStu\20170306001\OpenCVStudy\SkinDetection\app\jni -classpath G:\OpenCVStu\20170306001\OpenCVStudy\SkinDetection\app\build\intermediates\classes\debug com.thinking.skindetection.SkinHandler
 
-/*
-public class com.thinking.skindetection.SkinHandler {
-  public static java.lang.String FilePath;
-    descriptor: Ljava/lang/String;
-  public com.thinking.skindetection.SkinHandler();
-    descriptor: ()V
-
-  public static boolean init(android.content.Context);
-    descriptor: (Landroid/content/Context;)Z
-
-  public static native boolean init(java.lang.String);
-    descriptor: (Ljava/lang/String;)Z
-
-  public static native void getFaseLocation(com.thinking.skindetection.SkinHandler$ImageData, com.thinking.skindetection.SkinHandler$Position);
-    descriptor: (Lcom/thinking/skindetection/SkinHandler$ImageData;Lcom/thinking/skindetection/SkinHandler$Position;)V
-
-  public static native void getEyesLocation(com.thinking.skindetection.SkinHandler$ImageData, com.thinking.skindetection.SkinHandler$Position, com.thinking.skindetection.SkinHandler$Position);
-    descriptor: (Lcom/thinking/skindetection/SkinHandler$ImageData;Lcom/thinking/skindetection/SkinHandler$Position;Lcom/thinking/skindetection/SkinHandler$Position;)V
-
-  static {};
-    descriptor: ()V
-}
-*/
+//javap -classpath . -s SkinHandler
 
 /*
 #include <jni.h>
@@ -93,5 +77,3 @@ public class com.thinking.skindetection.SkinHandler {
 using namespace std;
 using namespace cv;
 */
-
-//javap -classpath . -s SkinHandler

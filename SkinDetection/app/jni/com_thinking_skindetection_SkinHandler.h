@@ -25,17 +25,25 @@ extern "C" {
 	/*
 	 * Class:     com_thinking_skindetection_SkinHandler
 	 * Method:    getFaseLocation
-	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Position;)V
+	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Position;Lcom/thinking/skindetection/SkinHandler/Listener;)V
 	 */
 	JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_getFaseLocation
-		(JNIEnv *, jclass, jobject, jobject);
+		(JNIEnv *, jclass, jobject, jobject, jobject);
 
 	/*
 	 * Class:     com_thinking_skindetection_SkinHandler
 	 * Method:    getEyesLocation
-	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Position;Lcom/thinking/skindetection/SkinHandler/Position;)V
+	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Position;Lcom/thinking/skindetection/SkinHandler/Position;Lcom/thinking/skindetection/SkinHandler/Listener;)V
 	 */
 	JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_getEyesLocation
+		(JNIEnv *, jclass, jobject, jobject, jobject, jobject);
+
+	/*
+	 * Class:     com_thinking_skindetection_SkinHandler
+	 * Method:    changeSkin
+	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Listener;)V
+	 */
+	JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_changeSkin
 		(JNIEnv *, jclass, jobject, jobject, jobject);
 
 #ifdef __cplusplus
