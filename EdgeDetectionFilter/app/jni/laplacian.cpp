@@ -50,7 +50,7 @@ JNIEXPORT void JNICALL Java_com_thinking_edgedetectionfilter_ImageHandler_get_1i
 			bilateralFilter(tmp, s_img, ksize, s_color, s_space);
 		}
 	}
-	//step3：回复大小
+	//step3：恢复大小
 	Mat b_img;
 	resize(s_img, b_img, color_img.size(), 0, 0, INTER_LINEAR);
 	//回调
