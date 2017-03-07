@@ -41,10 +41,18 @@ extern "C" {
 	/*
 	 * Class:     com_thinking_skindetection_SkinHandler
 	 * Method:    changeSkin
-	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Listener;)V
+	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Position;Lcom/thinking/skindetection/SkinHandler/Listener;)V
 	 */
 	JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_changeSkin
 		(JNIEnv *, jclass, jobject, jobject, jobject);
+
+	/*
+	 * Class:     com_thinking_skindetection_SkinHandler
+	 * Method:    floodFlood
+	 * Signature: (Lcom/thinking/skindetection/SkinHandler/ImageData;Lcom/thinking/skindetection/SkinHandler/Listener;)V
+	 */
+	JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_floodFlood
+		(JNIEnv *, jclass, jobject, jobject);
 
 #ifdef __cplusplus
 }

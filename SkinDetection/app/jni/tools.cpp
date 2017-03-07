@@ -50,7 +50,7 @@ Mat getLaplacianMask(Mat& source_img)
 {
 	Mat hui_img;
 	cvtColor(source_img, hui_img, CV_BGRA2GRAY);
-	medianBlur(hui_img, hui_img, 7);
+	medianBlur(hui_img, hui_img, 9);
 	Mat lap_img;
 	Laplacian(hui_img, lap_img, CV_8U, 5);
 	return lap_img;

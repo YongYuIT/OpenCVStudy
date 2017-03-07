@@ -61,9 +61,11 @@ public class SkinHandler {
     public static native void getEyesLocation(ImageData data, Position position_left, Position position_right, Listener listener);
 
     public static native void changeSkin(ImageData data, Position position, Listener listener);
+
+    public static native void floodFlood(ImageData data, Listener listener);
 }
 
-//javah -d G:\OpenCVStu\20170306001\OpenCVStudy\SkinDetection\app\jni -classpath G:\OpenCVStu\20170306001\OpenCVStudy\SkinDetection\app\build\intermediates\classes\debug com.thinking.skindetection.SkinHandler
+//javah -d G:\OpenCVStu\20170307001\OpenCVStudy\SkinDetection\app\jni -classpath G:\OpenCVStu\20170307001\OpenCVStudy\SkinDetection\app\build\intermediates\classes\debug com.thinking.skindetection.SkinHandler
 
 //javap -classpath . -s SkinHandler
 

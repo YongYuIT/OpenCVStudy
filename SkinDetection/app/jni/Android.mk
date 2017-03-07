@@ -9,5 +9,6 @@ LOCAL_MODULE    := com_thinking_opencv
 LOCAL_SRC_FILES := tools.cpp \
 	face.cpp \
 	skin.cpp \
+	flood_fill.cpp \
 LOCAL_LDLIBS +=  -llog -ldl
 include $(BUILD_SHARED_LIBRARY)
