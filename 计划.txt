@@ -1,5 +1,5 @@
 1、总结Android图片输入OpenCV & Android接收来自OpenCV输入 20170223 finish
 2、总结Android Camera输入OpenCV & Android接收来自OpenCV输入 20170227 finish
-3、研究滤波器和边缘检测器 20170301
-4、video输入OpenCV 20170301
-5、研究皮肤检测
+3、研究滤波器和边缘检测器 20170301 finish
+4、video输入OpenCV 20170301 finish
+5、研究皮肤检测 finish
