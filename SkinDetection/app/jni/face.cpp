@@ -81,13 +81,13 @@ JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_getFaseLocati
 		s_img = hui_img;//浅拷贝
 	}
 	//输出
-	out_put_img(s_img, 0);
+	//out_put_img(s_img, 0);
 	__android_log_print(ANDROID_LOG_INFO, "yuyong", "step2");
 	//step3：直方图均衡化，改善图像的对比度和亮度
 	Mat zhifang_img;
 	equalizeHist(s_img, zhifang_img);
 	//输出
-	out_put_img(zhifang_img, 1);
+	//out_put_img(zhifang_img, 1);
 	__android_log_print(ANDROID_LOG_INFO, "yuyong", "step3");
 	//step4：检测人脸
 	Size min_face_size(50, 50);//最小查找值。只检测不小于50*50的人脸。

@@ -4,6 +4,16 @@
 JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_floodFlood
 (JNIEnv * env, jclass j_class, jobject img_data_obj, jobject listener_obj)
 {
+	//----------------------------------------------------------------------------------------------------------------------
+	//int floodFill(InputOutputArray image, InputOutputArray mask, Point seedPoint, Scalar newVal, CV_OUT Rect* rect = 0, Scalar loDiff = Scalar(), Scalar upDiff = Scalar(), int flags = 4);
+	//InputOutputArray：输入&输出，1通道或者3通道，8位或者浮点图像
+	//InputOutputArray：8位单通道掩码，floodFill算法将从起点开始蔓延至掩码边界（掩码即全1）。
+	//Point：floodFill算法起点
+	//Scalar：算法填充颜色值
+	//Rect：算法最小可填充矩形区域，小于这个值的区域将会被忽略
+	//Scalar：亮度或者颜色的负差最大值
+	//Scalar：亮度或者颜色的正差最大值
+	//int：标志，由高中低三个8位符共同决定
 	jint width;
 	jint height;
 	jintArray image_datas;
@@ -26,16 +36,6 @@ JNIEXPORT void JNICALL Java_com_thinking_skindetection_SkinHandler_floodFlood
 	jclass Listener_class = env->GetObjectClass(listener_obj);
 	jmethodID onHandling_id = env->GetMethodID(Listener_class, "onHandling", "([IIII)V");
 	set_out_params(env, listener_obj, onHandling_id);
-	//----------------------------------------------------------------------------------------------------------------------
-	//int floodFill(InputOutputArray image, InputOutputArray mask, Point seedPoint, Scalar newVal, CV_OUT Rect* rect = 0, Scalar loDiff = Scalar(), Scalar upDiff = Scalar(), int flags = 4);
-	//InputOutputArray：输入&输出，1通道或者3通道，8位或者浮点图像
-	//InputOutputArray：8位单通道掩码，floodFill算法将从起点开始蔓延至掩码边界（掩码即全1）。
-	//Point：floodFill算法起点
-	//Scalar：算法填充颜色值
-	//Rect：算法最小可填充矩形区域，小于这个值的区域将会被忽略
-	//Scalar：亮度或者颜色的负差最大值
-	//Scalar：亮度或者颜色的正差最大值
-	//int：标志，由高中低三个8位符共同决定
 	//----------------------------------------------------------------------------------------------------------------------
 	//利用Laplacian边缘滤波器得到全尺寸掩码
 	Mat mask = getLaplacianMask(m_image_datas);
