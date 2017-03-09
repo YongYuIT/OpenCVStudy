@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.thinking.cameraimput.MainActivity">
 
-    <com.thinking.cameraimput.FaceView
+    <com.thinking.cameraimput.CameraView
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:background="@android:color/holo_blue_light" />

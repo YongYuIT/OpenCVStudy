@@ -16,7 +16,7 @@ public class CameraTool {
     }
 
     private static CameraTool thiz;
-    private CameraView mView;
+    private CameraBaseView mView;
     private Camera mCamera;
     private boolean isRotate = true;
 
@@ -29,7 +29,7 @@ public class CameraTool {
     }
 
 
-    public void setView(CameraView view) {
+    public void setView(CameraBaseView view) {
         mView = view;
     }
 
