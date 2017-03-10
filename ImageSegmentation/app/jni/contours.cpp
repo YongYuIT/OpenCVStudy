@@ -36,15 +36,23 @@ JNIEXPORT void JNICALL Java_com_thinking_imagesegmentation_ImageHandler_getConto
 	//二值化
 	Mat erzhi_img = Mat::zeros(hui_img.rows + 2, hui_img.cols + 2, CV_8UC1);
 	Mat s_erzhi_img = erzhi_img(Rect(1, 1, hui_img.cols, hui_img.rows));
-	threshold(hui_img, s_erzhi_img, 0, 255, CV_THRESH_OTSU + CV_THRESH_BINARY);
+	threshold(hui_img, s_erzhi_img, 80, 255, THRESH_BINARY_INV);
 	out_put_img(erzhi_img, 0);
-	//二值化
-	Mat b_img = Mat::zeros(erzhi_img.rows + 2, erzhi_img.cols + 2, CV_8UC1);
 	//找出边缘
 	vector< vector< Point > > lunkuos;//轮廓
 	findContours(erzhi_img, lunkuos, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
 	__android_log_print(ANDROID_LOG_INFO, "yuyong", "findContours %i", lunkuos.size());
-	drawContours(m_image_datas, lunkuos, 0, Scalar(255, 0, 0, 255), CV_FILLED);
+	/*
+	第一个参数image表示目标图像，
+	第二个参数contours表示输入的轮廓组，每一组轮廓由点vector构成，
+	第三个参数contourIdx指明画第几个轮廓，如果该参数为负值，则画全部轮廓，
+	第四个参数color为轮廓的颜色，
+	第五个参数thickness为轮廓的线宽，如果为负值或CV_FILLED表示填充轮廓内部，
+	第六个参数lineType为线型，
+	第七个参数为轮廓结构信息，
+	第八个参数为maxLevel
+	*/
+	drawContours(m_image_datas, lunkuos, -1, Scalar(0, 0, 255, 255), 2);
 	out_put_img(m_image_datas, 1);
 	//筛选边缘
 }
