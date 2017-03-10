@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\camera.cpp" />
+    <ClCompile Include="..\..\..\contours.cpp" />
     <ClCompile Include="..\..\..\rect_obj.cpp" />
     <ClCompile Include="..\..\..\tools.cpp" />
   </ItemGroup>

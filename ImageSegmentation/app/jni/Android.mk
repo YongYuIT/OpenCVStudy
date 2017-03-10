@@ -9,5 +9,6 @@ LOCAL_MODULE    := com_thinking_opencv
 LOCAL_SRC_FILES := rect_obj.cpp \
 	tools.cpp \
 	camera.cpp \
+	contours.cpp \
 LOCAL_LDLIBS +=  -llog -ldl
 include $(BUILD_SHARED_LIBRARY)

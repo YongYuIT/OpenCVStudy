@@ -9,23 +9,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends Activity implements ImageHandler.Listener {
-
+public class ContoursActivity extends Activity implements ImageHandler.Listener {
     Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_contours);
         mHandler = new Handler();
     }
 
     public void onClick(View v) {
         if (v.getId() == R.id.btn_test_1) {
             Bitmap source = ((BitmapDrawable) getResources().getDrawable(
-                    R.drawable.test_001)).getBitmap();
+                    R.drawable.test_000)).getBitmap();
             ImageHandler.ImageData data = new ImageHandler.ImageData(source);
-            ImageHandler.doRectangleObj(data, this);
+            ImageHandler.doContoursRect(data, this);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.thinking.imagesegmentation;
 
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 
 import java.util.concurrent.ExecutorService;
@@ -18,11 +17,20 @@ public class ImageHandler {
         System.loadLibrary("com_thinking_opencv");
     }
 
-    public static void getRectangleObj(ImageData data, final Listener listener, final ContextWrapper context) {
+    public static void doRectangleObj(ImageData data, final Listener listener) {
         pool.execute(new NdkTask(listener, data) {
             @Override
             public void run() {
                 getRectangleObj((ImageData) mDatas[0], listener);
+            }
+        });
+    }
+
+    public static void doContoursRect(ImageData data, final Listener listener) {
+        pool.execute(new NdkTask(listener, data) {
+            @Override
+            public void run() {
+                getContoursRect((ImageData) mDatas[0], listener);
             }
         });
     }
@@ -63,6 +71,8 @@ public class ImageHandler {
 
     private static native void getRectangleObj(ImageData data, Listener listener);
 
+
+    private static native void getContoursRect(ImageData data, Listener listener);
 }
 
 //javah -d G:\OpenCVStu\20170309001\OpenCVStudy\ImageSegmentation\app\jni -classpath G:\OpenCVStu\20170309001\OpenCVStudy\ImageSegmentation\app\build\intermediates\classes\debug com.thinking.imagesegmentation.ImageHandler

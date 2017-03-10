@@ -22,6 +22,14 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_com_thinking_imagesegmentation_ImageHandler_getRectangleObj
 		(JNIEnv *, jclass, jobject, jobject);
 
+	/*
+	 * Class:     com_thinking_imagesegmentation_ImageHandler
+	 * Method:    getContoursRect
+	 * Signature: (Lcom/thinking/imagesegmentation/ImageHandler/ImageData;Lcom/thinking/imagesegmentation/ImageHandler/Listener;)V
+	 */
+	JNIEXPORT void JNICALL Java_com_thinking_imagesegmentation_ImageHandler_getContoursRect
+		(JNIEnv *, jclass, jobject, jobject);
+
 #ifdef __cplusplus
 }
 #endif
